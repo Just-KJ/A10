@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>This is My Second Webpage</title>
+    <link rel="stylesheet" href="styling.css">
+</head>
+<body>
+    <h1 class="center">Welcome to my Second Webpage!</h1>
+    <br>
+    <br>
+    <ol>
+        <li class="large-font"><b>Username:</b><i> Just-KJ</i></li>
+        <li class="large-font"><b>Course Name:</b><i> Intro to Website Development - IS117005</i></li>
+    </ol>
+    <br>
+    <div id="message"></div>
+    <form id="form" onsubmit="SaveName(event)">
+        <label for="name">Please enter your name here:</label>
+        <input type="text" id="name" required>
+        <button type="submit">Save</button>
+    </form>
+    <script>
+        //Basic function 
+        function SaveName(event) 
+        {
+            event.preventDefault();
+            let UserName = document.getElementById("name").value;
+            let dateToExpire = new Date();
+            dateToExpire.setTime(dateToExpire.getTime() + (1 * 24 * 60 * 60 * 1000));
+            document.cookie = "UserName=" + UserName + "; expires=" + dateToExpire.toUTCString() + "; path=/";
+            Showing(UserName);
+        }
+        //Get cookie 
+        function getCookie(name) 
+        {
+            let KeptName = name + "=";
+            let cookies = document.cookie.split(';');
+            for(let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.indexOf(KeptName) == 0) {
+                    return cookie.substring(KeptName.length, cookie.length);
+                }
+            }
+            return null;
+        }
+        //show the cookie
+        function Showing(UserName) 
+        {
+            document.getElementById("message").innerText = "Hello " + UserName + ", welcome to my second webpage officially.";
+            document.getElementById("form").style.display = "none"; 
+        }
+        //checking my cookie 
+        window.onload = function() 
+        {
+            let UserName = getCookie("UserName");
+            if (UserName) {
+                Showing(UserName);
+            }
+        }
+    </script>
+    <br>
+    <br>
+    <footer>
+        <p>&copy; Fall 2024, Karolyn J. Valerio</p>
+    </footer>
+</body>
+</html>
